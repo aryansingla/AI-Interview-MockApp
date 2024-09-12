@@ -4,6 +4,7 @@ import { db } from '@/utils/db'
 import { MockInterview } from '@/utils/schema'
 import { eq } from 'drizzle-orm'
 import { Lightbulb, WebcamIcon } from 'lucide-react'
+import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import Webcam from 'react-webcam'
 
@@ -14,11 +15,11 @@ const page = ({ params }) => {
     ;
     useEffect(() => {
         console.log(params)
-        GetInterviewDEtails();
+        GetInterviewDetails();
     }, [])
 
 
-    const GetInterviewDEtails = async () => {
+    const GetInterviewDetails = async () => {
         const result = await db.select().from(MockInterview).where(eq(MockInterview.mockId, params.interviewId));
         setInterviewData(result[0]);
     }
@@ -54,7 +55,9 @@ const page = ({ params }) => {
                         </>
                     }
                     <div className='flex justify-end items-end mt-6'>
+                        <Link href={`/dashboard/interview/${params.interviewId}/start`}>
                         <Button className="">Start Interview</Button>
+                        </Link>
                     </div>
                 </div>
 
